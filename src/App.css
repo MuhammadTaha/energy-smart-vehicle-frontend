@@ -1,6 +1,7 @@
-/* .App {
-  text-align: center;
-} */
+.App {
+  /* text-align: center; */
+  background-color: #5df5f2;
+}
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -35,7 +36,8 @@
 
 .divUserInputs
 {
-  background-color:#e9ecef
+  background-color:#e9ecef;
+  padding: 1%;
 }
 
 .divMapImage{
@@ -49,5 +51,23 @@
 }
 
 .topSpace{
-  margin-top: 3%;
+  margin-top: 1%;
+  padding: 2%;
+}
+
+th,td {
+  text-align: center;
+}
+
+.topTitle{
+  text-align: center;
+  padding: 5%; 
+}
+
+.submitButton{
+  margin-top:1%;
+}
+
+.react-datetime-picker{
+  margin-left: -4%;
 }
