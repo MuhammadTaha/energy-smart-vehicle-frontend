@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Table, Container, Row, Col, Input, Button } from "reactstrap";
+import { Table, Container, Row, Col, Input, Button, Form } from "reactstrap";
 
 import DateTimePicker from 'react-datetime-picker';
 // import "react-datepicker/dist/react-datepicker.css";
@@ -13,6 +13,10 @@ export default class RouteBased extends React.Component {
 
   onChange = date => this.setState({ date })
 
+  submitForm(e){
+    console.log(e);
+  }
+
     render() {
 
       let targetDate = new Date();
@@ -20,19 +24,22 @@ export default class RouteBased extends React.Component {
 
       return (
         <Container>
+            <Form onSubmit={this.submitForm}>
           <Row>
               <Col md={{ size: 10, offset: 1 }} className="topSpace">
+              <h3>Route Based</h3>
+
                   <div className="divUserInputs topSpace">
                       <Row>
                           <Col md={{size:5}}>
                               <label>Select a route:</label>
-                              <Input type="select">
-                              <option>Ernst Reuter Platz to Tempelhof feld </option>
+                              <Input name="routeName" type="select">
+                              <option value="ernstReuter" >Ernst Reuter Platz to Tempelhof feld </option>
                               </Input>
                           </Col>
                           <Col md={{size:5, offset: 1}}>
                               <label>Select a car:</label>
-                              <Input type="select">
+                              <Input name="" type="select">
                               <option>Nissan Leaf </option>
                               </Input>
                           </Col>
@@ -46,7 +53,7 @@ export default class RouteBased extends React.Component {
                                 </Col>
                               </Row>
                               <Row>
-                                  <Col md={9}>
+                                  <Col md={8}>
 
                                       <Table>
                                           <thead>
@@ -110,7 +117,7 @@ export default class RouteBased extends React.Component {
                                   </Col>
                               </Row>
                               <Row>
-                                <Col md={12}>
+                                <Col md={11} style={{marginTop:'1%'}}>
                                   <Button classname="submitButton" type="submit" className="float-right">Submit</Button>
                                 </Col>
                               </Row>
@@ -152,22 +159,9 @@ export default class RouteBased extends React.Component {
                         </Col>
                       </Row>
                   </div>
-                  {/* </div>
-              </Col>
-              <Col md={{ size: 5 }} className="divUserInputs">
-                  {/* <div className="topSpace"> */}
-                      {/* <Row> */}
-                          {/* <h6 className="alignResultText">Optimal Time for Departure</h6> */}
-                      {/* </Row> */}
-                      {/* <Row> */}
-                          {/* <h6 className="alignResultText">Energy Consumed</h6> */}
-                      {/* </Row> */}
-                      {/* <Row> */}
-                          {/* <h6 className="alignResultText">Waiting Time</h6> */}
-                      {/* </Row> */}
-                  {/* </div> */}
               </Col>
           </Row>
+          </Form>
       </Container>
       );
     }
