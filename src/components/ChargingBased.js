@@ -50,15 +50,15 @@ export default class ChargingBased extends React.Component {
                     <Row>
                         <Col md={{size:5}}>
                             <label>Charging Type</label>
-                            <Input type="select">
-                            <option>10 kW </option>
-                            <option>15 kW </option>
-                            <option>20 kW </option>
+                            <Input name="powerSelection" type="select">
+                            <option value={10}>10 kW </option>
+                            <option value={20}>15 kW </option>
+                            <option value={30}>20 kW </option>
                             </Input>
                         </Col>
                         <Col md={{size:5, offset: 1}}>
                             <label>Select a car:</label>
-                            <Input type="select">
+                            <Input name="carType" type="select">
                             <option>Nissan Leaf </option>
                             </Input>
                         </Col>
@@ -70,23 +70,23 @@ export default class ChargingBased extends React.Component {
                         </Col>
                         <Col md={{size:5, offset:1}}>
                             <label>Departure Time</label>
-                            <DateTimePicker onChange={this.onChange} value={this.state.date} maxDate={targetDate} minDate={new Date()} className="form-control" name="arrivalTime" />
+                            <DateTimePicker onChange={this.onChange} value={this.state.date} maxDate={targetDate} minDate={new Date()} className="form-control" name="departureTime" />
                         </Col>
                     </Row>
                     <Row>
                         <Col md={{size:5}}>
                             <label>Select a city:</label>
-                            <Input type="select">
+                            <Input name="city" type="select">
                             <option>Berlin </option>
                             </Input>
                         </Col>
                         <Col md={{size:5, offset: 1}}>
                             <label>Charging Status</label>
-                            <Input type="select">
-                            <option>10%</option>
-                            <option>20%</option>
-                            <option>30%</option>
-                            <option>40%</option>
+                            <Input name="chargingStatus" type="select">
+                            <option name={10}>10%</option>
+                            <option name={20}>20%</option>
+                            <option name={30}>30%</option>
+                            <option name={40}>40%</option>
                             </Input>
                         </Col>
                     </Row>
