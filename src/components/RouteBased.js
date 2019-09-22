@@ -2,11 +2,7 @@ import * as React from 'react';
 import { Table, Container, Row, Col, Input, Button, Form, CustomInput } from "reactstrap";
 
 import DateTimePicker from 'react-datetime-picker';
-import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
-
-// import "react-datepicker/dist/react-datepicker.css";
-
 
 export default class RouteBased extends React.Component {
 
@@ -20,8 +16,32 @@ export default class RouteBased extends React.Component {
   onChange = date => this.setState({ date })
 
   submitForm(e){
-    console.log(e);
+    // console.log(e);
+    e.preventDefault();
+    const data = new FormData(e.target);
+    console.log('form data',data.get('routeName'));
+    const myHeaders = new Headers({
+        "Access-Control-Allow-Origin": "*",
+        'origin': '*'
+      })
+
+    fetch('http://127.0.0.1:5000/route-based', {
+        headers: myHeaders,
+        method: 'POST',
+        body: JSON.stringify(Object.fromEntries(data)),
+      }).then((response)=>{
+       
+            console.log(response.headers); // returns a Headers{} object
+            // response.blob().then(function(myBlob) {
+            //   var objectURL = URL.createObjectURL(myBlob);
+            //   myImage.src = objectURL;
+            // });
+         
+      })
   }
+
+
+
 
   handleOnChange = (event) => {
       console.log('change value', event.target.id, event.target.value);
@@ -47,7 +67,7 @@ export default class RouteBased extends React.Component {
 
       let targetDate = new Date();
       targetDate.setDate(targetDate.getDate() + 7);
-      let min = 0, max = 10, stepValue= 0.1;
+      let min = 0, max = 10;
       return (
         <Container>
             <Form onSubmit={this.submitForm}>
@@ -79,13 +99,15 @@ export default class RouteBased extends React.Component {
                                 </Col>
                               </Row>
                               <Row>
-                                  <Col md={8}>
+                                  <Col md={7}>
 
                                       <Table>
                                           <thead>
-                                              <th></th>
-                                              <th>Priority Range</th>
-                                              <th>Value</th>
+                                              <tr>
+                                                <th></th>
+                                                <th>Priority Range</th>
+                                                <th>Value</th>
+                                              </tr>
                                           </thead>
                                           <tbody>
                                               <tr>
@@ -126,9 +148,9 @@ export default class RouteBased extends React.Component {
                                       </Table>
 
                                   </Col>
-                                  <Col md={3}>
+                                  <Col md={5}>
                                       <div>
-                                          <img alt="" src="https://picsum.photos/200/200?random=1"></img>
+                                          <img id="imgMap" alt="" src='/images/map.png'></img>
                                       </div>
                                   </Col>
                               </Row>

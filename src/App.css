@@ -1,6 +1,6 @@
 .App {
   /* text-align: center; */
-  background-color: #5df5f2;
+  background-color: lightslategray;
 }
 
 .App-logo {
@@ -75,6 +75,12 @@ th,td {
 .rangeDisplay {
   width: 35% !important;
 }
+
 th{
   width:35%;
+}
+
+#imgMap{
+  margin: -10%;
+  width: 104%;
 }

@@ -22,8 +22,7 @@ export default class Home extends React.Component {
           <Route path="/charging-based" exact component={ChargingBased} />
         </Switch>
       </Router>
-
       );
-
     }
 }
+
