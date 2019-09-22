@@ -71,3 +71,10 @@ th,td {
 .react-datetime-picker{
   margin-left: -4%;
 }
+
+.rangeDisplay {
+  width: 35% !important;
+}
+th{
+  width:35%;
+}

@@ -1,7 +1,10 @@
 import * as React from 'react';
-import { Table, Container, Row, Col, Input, Button, Form } from "reactstrap";
+import { Table, Container, Row, Col, Input, Button, Form, CustomInput } from "reactstrap";
 
 import DateTimePicker from 'react-datetime-picker';
+import Slider from 'react-rangeslider'
+import 'react-rangeslider/lib/index.css'
+
 // import "react-datepicker/dist/react-datepicker.css";
 
 
@@ -9,6 +12,9 @@ export default class RouteBased extends React.Component {
 
   state = {
     date: new Date(),
+    energy: 10, 
+    waiting: 10, 
+    driving: 10, 
   }
 
   onChange = date => this.setState({ date })
@@ -17,11 +23,31 @@ export default class RouteBased extends React.Component {
     console.log(e);
   }
 
+  handleOnChange = (event) => {
+      console.log('change value', event.target.id, event.target.value);
+      switch(event.target.id){
+        case 'energyRange':
+            this.setState({
+                energy: event.target.value
+            })
+            break;
+        case 'waitingRange':
+            this.setState({
+                waiting: event.target.value
+            })
+            break;
+        case 'drivingRange':
+            this.setState({
+                driving: event.target.value
+            })
+            break;
+      }
+  }
     render() {
 
       let targetDate = new Date();
       targetDate.setDate(targetDate.getDate() + 7);
-
+      let min = 0, max = 10, stepValue= 0.1;
       return (
         <Container>
             <Form onSubmit={this.submitForm}>
@@ -39,8 +65,8 @@ export default class RouteBased extends React.Component {
                           </Col>
                           <Col md={{size:5, offset: 1}}>
                               <label>Select a car:</label>
-                              <Input name="" type="select">
-                              <option>Nissan Leaf </option>
+                              <Input name="carType" type="select">
+                              <option value="nissanLeaf">Nissan Leaf</option>
                               </Input>
                           </Col>
                       </Row>
@@ -58,9 +84,8 @@ export default class RouteBased extends React.Component {
                                       <Table>
                                           <thead>
                                               <th></th>
-                                              <th>High</th>
-                                              <th>Medium</th>
-                                              <th>Low</th>
+                                              <th>Priority Range</th>
+                                              <th>Value</th>
                                           </thead>
                                           <tbody>
                                               <tr>
@@ -68,27 +93,21 @@ export default class RouteBased extends React.Component {
                                                       Minimize Energy consumption
                                                   </td>
                                                   <td>
-                                                      <Input type="radio" className="radio-priority" checked name="minEnergy" />
+                                                  <CustomInput type="range" id="energyRange" name="minEnergy" min={min} max={max} onChange={this.handleOnChange} />
                                                   </td>
                                                   <td>
-                                                      <Input type="radio" className="radio-priority" name="minEnergy" />
-                                                  </td>
-                                                  <td>
-                                                      <Input type="radio" className="radio-priority" name="minEnergy" />
-                                                  </td>
+                                                      <Input type="text" className="rangeDisplay" id="minEnergyValue" name="minEnergyValue" value={this.state.energy} readOnly></Input>
+                                                    </td>
                                               </tr>
                                               <tr>
                                                   <td>
                                                       Minimize Waiting Time
                                                   </td>
                                                   <td>
-                                                      <Input type="radio" className="radio-priority" checked name="minWaiting" />
+                                                    <CustomInput type="range" id="waitingRange" name="minWaiting" min={min} max={max} onChange={this.handleOnChange} />
                                                   </td>
                                                   <td>
-                                                      <Input type="radio" className="radio-priority" name="minWaiting" />
-                                                  </td>
-                                                  <td>
-                                                      <Input type="radio" className="radio-priority" name="minWaiting" />
+                                                    <Input type="text" className="rangeDisplay" id="minWaitingValue" name="minWaitingValue" value={this.state.waiting} readOnly></Input>
                                                   </td>
                                               </tr>
                                               <tr>
@@ -96,13 +115,10 @@ export default class RouteBased extends React.Component {
                                                       Minimize Driving Time
                                                   </td>
                                                   <td>
-                                                      <Input type="radio" className="radio-priority" checked name="minDriving" />
+                                                    <CustomInput type="range" id="drivingRange" name="minDriving" min={min} max={max} onChange={this.handleOnChange} />
                                                   </td>
                                                   <td>
-                                                      <Input type="radio" className="radio-priority" name="minDriving" />
-                                                  </td>
-                                                  <td>
-                                                      <Input type="radio" className="radio-priority" name="minDriving" />
+                                                    <Input type="text" className="rangeDisplay" id="minDrivingValue" name="minDrivingValue" value={this.state.driving} readOnly></Input>
                                                   </td>
                                               </tr>
                                           </tbody>
