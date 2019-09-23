@@ -7,10 +7,16 @@ import DateTimePicker from 'react-datetime-picker';
 export default class ChargingBased extends React.Component {
 
   state = {
-    date: new Date(),
+    arrivalDate: new Date(),
+    departureDate: new Date(),
   }
 
-  onChange = date => this.setState({ date })
+  onArrivalChange = arrivalDate => this.setState({ 
+    arrivalDate
+  })
+  onDepartureChange = departureDate => this.setState({ 
+    departureDate
+  })
 
   submitForm(e){
     e.preventDefault();
@@ -65,18 +71,18 @@ export default class ChargingBased extends React.Component {
                     <Row>
                         <Col md={{size:5}} style={{marginLeft: "1.5%"}}>
                             <label>Arrival Time</label>
-                            <DateTimePicker onChange={this.onChange} value={this.state.date} maxDate={targetDate} minDate={new Date()} className="form-control" name="arrivalTime" />
+                            <DateTimePicker onChange={this.onArrivalChange} value={this.state.arrivalDate} maxDate={targetDate} minDate={new Date()} className="form-control" name="arrivalTime" />
                         </Col>
                         <Col md={{size:5, offset:1}}>
                             <label>Departure Time</label>
-                            <DateTimePicker onChange={this.onChange} value={this.state.date} maxDate={targetDate} minDate={new Date()} className="form-control" name="departureTime" />
+                            <DateTimePicker onChange={this.onDepartureChange} value={this.state.departureDate} maxDate={targetDate} minDate={new Date()} className="form-control" name="departureTime" />
                         </Col>
                     </Row>
                     <Row>
                         <Col md={{size:5}}>
                             <label>Select a city:</label>
                             <Input name="city" type="select">
-                            <option value="berlin">Berlin </option>
+                            <option value="Berlin">Berlin </option>
                             </Input>
                         </Col>
                         <Col md={{size:3, offset: 1}}>
@@ -86,6 +92,10 @@ export default class ChargingBased extends React.Component {
                             <option value={20}>20%</option>
                             <option value={30}>30%</option>
                             <option value={40}>40%</option>
+                            <option value={50}>50%</option>
+                            <option value={60}>60%</option>
+                            <option value={70}>70%</option>
+
                             </Input>
                         </Col>
                         <Col md={3} style={{marginLeft :"-5%"}}>
