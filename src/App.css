@@ -84,3 +84,7 @@ th{
   margin: -10%;
   width: 104%;
 }
+
+.chargingDropdowns{
+  width:75% !important; 
+}

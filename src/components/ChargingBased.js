@@ -51,9 +51,8 @@ export default class ChargingBased extends React.Component {
                         <Col md={{size:5}}>
                             <label>Charging Type</label>
                             <Input name="powerSelection" type="select">
-                            <option value={10}>10 kW </option>
-                            <option value={20}>15 kW </option>
-                            <option value={30}>20 kW </option>
+                            <option value={11}>11 kW (Slow Charging)</option>
+                            <option value={50}>50 kW (Fast Charging)</option>
                             </Input>
                         </Col>
                         <Col md={{size:5, offset: 1}}>
@@ -77,16 +76,26 @@ export default class ChargingBased extends React.Component {
                         <Col md={{size:5}}>
                             <label>Select a city:</label>
                             <Input name="city" type="select">
-                            <option>Berlin </option>
+                            <option value="berlin">Berlin </option>
                             </Input>
                         </Col>
-                        <Col md={{size:5, offset: 1}}>
+                        <Col md={{size:3, offset: 1}}>
                             <label>Charging Status</label>
-                            <Input name="chargingStatus" type="select">
-                            <option name={10}>10%</option>
-                            <option name={20}>20%</option>
-                            <option name={30}>30%</option>
-                            <option name={40}>40%</option>
+                            <Input className="chargingDropdowns" name="chargingStatus" type="select">
+                            <option value={10}>10%</option>
+                            <option value={20}>20%</option>
+                            <option value={30}>30%</option>
+                            <option value={40}>40%</option>
+                            </Input>
+                        </Col>
+                        <Col md={3} style={{marginLeft :"-5%"}}>
+                            <label>Desired Charging Level</label>
+                            <Input className="chargingDropdowns" name="chargingStatus" type="select">
+                            <option value={40}>40%</option>
+                            <option value={50}>50%</option>
+                            <option value={60}>60%</option>
+                            <option value={70}>70%</option>
+                            <option value={80}>80%</option>
                             </Input>
                         </Col>
                     </Row>
