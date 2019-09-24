@@ -1,22 +1,40 @@
 import * as React from 'react';
-import { Row, Col, Input, Container, Button, Table, Form } from 'reactstrap';
+import { Row, Col, Input, Container, Button, Table, Form, Strong } from 'reactstrap';
 
 import DateTimePicker from 'react-datetime-picker';
 
 
 export default class ChargingBased extends React.Component {
 
+
+  constructor(props){
+    super(props);
+
+    this.submitForm = this.submitForm.bind(this);
+ 
+  }
+
   state = {
     arrivalDate: new Date(),
     departureDate: new Date(),
+    totalEnergy: 0,
+    minChargingCost: 0,
+    chargingDuration: 0,
+    chargingPrices:[]
   }
 
   onArrivalChange = arrivalDate => this.setState({ 
     arrivalDate
-  })
+  });
+
   onDepartureChange = departureDate => this.setState({ 
     departureDate
-  })
+  });
+
+
+  componentDidMount(){
+
+  }
 
   submitForm(e){
     e.preventDefault();
@@ -30,23 +48,42 @@ export default class ChargingBased extends React.Component {
         headers: myHeaders,
         method: 'POST',
         body: JSON.stringify(Object.fromEntries(data)),
-      }).then((response)=>{
-       
-            console.log(response.headers); // returns a Headers{} object
-            // response.blob().then(function(myBlob) {
-            //   var objectURL = URL.createObjectURL(myBlob);
-            //   myImage.src = objectURL;
-            // });
-         
       })
+      .then((response) => response.json())
+      .then((data) => {
+        
+        this.setState({
+          totalEnergy: data['sumTransferedEnergy'],
+          minChargingCost: data['minimumChargingCost'],
+          chargingDuration: data['UsedChargingTime'],
+          chargingPrices:data['ChargingPrices']
+        });
+      })
+
   }
 
   render() {
 
     let targetDate = new Date();
-      targetDate.setDate(targetDate.getDate() + 7);
+    targetDate.setDate(targetDate.getDate() + 7);
+    let count = 0;
+    let items = [];
+    if(Object.keys(this.state.chargingPrices).length > 0 ){
+    Object.keys(this.state.chargingPrices).map((arr) => {
 
-      return (
+      for (const v of this.state.chargingPrices[arr]) {
+            count++;
+            items.push(
+            <tr>
+              <td>{count}</td>
+              <td>{arr}</td>
+              <td>{v}</td>
+            </tr>)
+          }
+        });
+    }
+
+    return (
         <Container>
     <Form onSubmit={this.submitForm}>
         <Row>
@@ -120,31 +157,46 @@ export default class ChargingBased extends React.Component {
             </Col>
         </Row>
 
-        <Row>
+        <Row className="outputSection">
             <Col md={{ size: 10, offset: 1 }} style={{marginBottom: "4%"}}>
                 <Row>
                     <Col>
                         <h5>Output</h5></Col>
                 </Row>
                 <div className="divUserInputs topSpace">
+                  <Row>
+                    <Col md={4}>
+                      <label><strong>Total Energy Transferred(kWh)</strong></label>
+                    </Col>
+                    <Col md={4}>
+                      <label><strong>Minimum Possible Charging Cost (Cents)</strong></label>
+                    </Col>
+                    <Col md={4}>
+                      <label><strong>Total Charging Duration(hours)</strong></label>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md={4}>
+                      <label className="outputData"><strong>{this.state.totalEnergy} </strong></label>
+                    </Col>
+                    <Col md={4}>
+                      <label className="outputData"><strong> {this.state.minChargingCost}</strong></label>
+                    </Col>
+                    <Col md={4}>
+                      <label className="outputData"><strong>{this.state.chargingDuration}</strong></label>
+                    </Col>
+                  </Row>
                     <Row>
-                        <Table>
+                        <Table className="outTable">
                             <thead>
                               <tr>
-                                <th>Hour</th>
-                                <th>Amount Energy Transferred</th>
-                                <th>Cost of Energy</th>
+                                <th>Hour (h)</th>
+                                <th>Amount Energy Transferred (kWh)</th>
+                                <th>Cost of Energy (Cents)</th>
                               </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                    </td>
-                                </tr>
+                              {items}
                                 <tr>
                                     <td>
                                     </td>

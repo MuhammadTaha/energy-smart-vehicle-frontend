@@ -88,3 +88,11 @@ th{
 .chargingDropdowns{
   width:75% !important; 
 }
+
+.outTable th ,.outTable label , .outputSection label {
+  text-align: center;
+}
+
+.outputData{
+  margin-left: 35%;
+}
