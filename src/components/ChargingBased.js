@@ -57,8 +57,8 @@ export default class ChargingBased extends React.Component {
                         <Col md={{size:5}}>
                             <label>Charging Type</label>
                             <Input name="powerSelection" type="select">
-                            <option value={11}>11 kW (Slow Charging)</option>
-                            <option value={50}>50 kW (Fast Charging)</option>
+                            <option value={3.3}>3.3 kW (Slow Charging AC)</option>
+                            <option value={46}>46 kW (Fast Charging DC)</option>
                             </Input>
                         </Col>
                         <Col md={{size:5, offset: 1}}>

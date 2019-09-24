@@ -156,7 +156,7 @@ export default class RouteBased extends React.Component {
                               </Row>
                               <Row>
                                 <Col md={11} style={{marginTop:'1%'}}>
-                                  <Button classname="submitButton" type="submit" className="float-right">Submit</Button>
+                                  <Button className="submitButton" type="submit" className="float-right">Submit</Button>
                                 </Col>
                               </Row>
                           </div>
