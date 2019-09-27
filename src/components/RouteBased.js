@@ -9,6 +9,7 @@ export default class RouteBased extends React.Component {
     constructor(props){
         super(props);
         
+        // setting initial state for the the application
         this.state = {
             date: new Date(),
             energy: 10, 
@@ -24,25 +25,26 @@ export default class RouteBased extends React.Component {
             drivingCost: "",
           }
         
-          
+        // binding function to the component
         this.submitForm = this.submitForm.bind(this);
      
     }
 
 
- 
+  //  updating state on changing datetime
   onChange = date => this.setState({ date })
 
   submitForm(e){
-    // console.log(e);
     e.preventDefault();
     const data = new FormData(e.target);
-    console.log('form data',data.get('routeName'));
+
+    // setting header for CORS request
     const myHeaders = new Headers({
         "Access-Control-Allow-Origin": "*",
         'origin': '*'
       })
-
+       
+    // Request route based end point for sending and recieving results 
     fetch('http://127.0.0.1:5000/route-based', {
         headers: myHeaders,
         method: 'POST',
@@ -51,10 +53,8 @@ export default class RouteBased extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         
+        // updating states with values
         this.setState({
-        //   totalEnergy: data['sumTransferedEnergy'],
-        //   minChargingCost: data['minimumChargingCost'],
-        //   chargingDuration: data['UsedChargingTime'],
           waitingCost:data['waitingCost'],
           drivingCost:data['drivingCost'],
           optimalTime: data['departureTIme'],
@@ -71,7 +71,6 @@ export default class RouteBased extends React.Component {
 
 
   handleOnChange = (event) => {
-      console.log('change value', event.target.id, event.target.value);
       switch(event.target.id){
         case 'energyRange':
             this.setState({

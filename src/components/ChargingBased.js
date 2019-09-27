@@ -10,10 +10,12 @@ export default class ChargingBased extends React.Component {
   constructor(props){
     super(props);
 
+    // binding submit form function to the component
     this.submitForm = this.submitForm.bind(this);
  
   }
 
+  // setting initial state for the the application
   state = {
     arrivalDate: new Date(),
     departureDate: new Date(),
@@ -23,6 +25,7 @@ export default class ChargingBased extends React.Component {
     chargingPrices:[]
   }
 
+  // datetime on change functions to set the state 
   onArrivalChange = arrivalDate => this.setState({ 
     arrivalDate
   });
@@ -39,11 +42,14 @@ export default class ChargingBased extends React.Component {
   submitForm(e){
     e.preventDefault();
     const data = new FormData(e.target);
+
+    // preparing header for the CORS request
     const myHeaders = new Headers({
         "Access-Control-Allow-Origin": "*",
         'origin': '*'
       })
 
+    // Request charging based end point for sending and recieving results 
     fetch('http://127.0.0.1:5000/charging-based', {
         headers: myHeaders,
         method: 'POST',
