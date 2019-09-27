@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Row, Col } from 'reactstrap';
 import RouteBased  from "./RouteBased";
-import { NavLink, BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { NavLink, BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import ChargingBased from './ChargingBased';
 
 export default class Home extends React.Component {
@@ -21,6 +21,8 @@ export default class Home extends React.Component {
           <Route path="/route-based" exact component={RouteBased} />
           <Route path="/charging-based" exact component={ChargingBased} />
         </Switch>
+        <Redirect to="/route-based" />
+
       </Router>
       );
     }
