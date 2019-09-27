@@ -6,13 +6,31 @@ import 'react-rangeslider/lib/index.css'
 
 export default class RouteBased extends React.Component {
 
-  state = {
-    date: new Date(),
-    energy: 10, 
-    waiting: 10, 
-    driving: 10, 
-  }
+    constructor(props){
+        super(props);
+        
+        this.state = {
+            date: new Date(),
+            energy: 10, 
+            waiting: 10, 
+            driving: 10,
+            optimalTime: "",
+            energyConsumed: "",
+            energyPrice: "",
+            drivingDuration: "",
+            recRoute: "",
+            waitingDuration: "",
+            waitingCost: "",
+            drivingCost: "",
+          }
+        
+          
+        this.submitForm = this.submitForm.bind(this);
+     
+    }
 
+
+ 
   onChange = date => this.setState({ date })
 
   submitForm(e){
@@ -29,14 +47,23 @@ export default class RouteBased extends React.Component {
         headers: myHeaders,
         method: 'POST',
         body: JSON.stringify(Object.fromEntries(data)),
-      }).then((response)=>{
-       
-            console.log(response.headers); // returns a Headers{} object
-            // response.blob().then(function(myBlob) {
-            //   var objectURL = URL.createObjectURL(myBlob);
-            //   myImage.src = objectURL;
-            // });
-         
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        
+        this.setState({
+        //   totalEnergy: data['sumTransferedEnergy'],
+        //   minChargingCost: data['minimumChargingCost'],
+        //   chargingDuration: data['UsedChargingTime'],
+          waitingCost:data['waitingCost'],
+          drivingCost:data['drivingCost'],
+          optimalTime: data['departureTIme'],
+          energyConsumed: data['energyConsumed'],
+          energyPrice: data['energyPrice'],
+          drivingDuration: data['drivingTime'],
+          recRoute: data['recommendedRoute'],
+          waitingDuration:data['waitingTime'],
+        });
       })
   }
 
@@ -174,23 +201,23 @@ export default class RouteBased extends React.Component {
                   <div className="divUserInputs topSpace">
                       <Row>
                         <Col>
-                          <h6 className="alignResultText">Optimal Time for Departure</h6>
+                          <h6 className="alignResultText">Optimal Time for Departure (HH:mm): <strong className="valueDisplay">{this.state.optimalTime}</strong></h6>
                           </Col>
                           <Col>
-                          <h6 className="alignResultText">Recommended Route</h6>
+                          <h6 className="alignResultText">Recommended Route (City/Highway): <strong className="valueDisplay">{this.state.recRoute}</strong></h6>
                           </Col>
                       </Row>
                       <Row>
                         <Col>
-                          <h6 className="alignResultText">Energy Consumed</h6>
+                          <h6 className="alignResultText">Energy Consumed : <strong className="valueDisplay">{this.state.energyConsumed} kWh</strong><strong className="valueDisplay">{this.state.energyPrice} euro</strong></h6>
                           </Col>
                           <Col>
-                          <h6 className="alignResultText">Waiting Duration</h6>
+                          <h6 className="alignResultText">Waiting Duration : <strong className="valueDisplay">{this.state.waitingDuration} min</strong><strong className="valueDisplay">{this.state.waitingCost} euro</strong></h6>
                           </Col>
                       </Row>
                       <Row>
                         <Col>
-                          <h6 className="alignResultText">Driving Duration</h6>
+                          <h6 className="alignResultText">Driving Duration: <strong className="valueDisplay">{this.state.drivingDuration} min</strong> <strong className="valueDisplay">{this.state.drivingCost} euro</strong></h6>
                         </Col>
                         <Col>
                           <h6 className="alignResultText"></h6>
